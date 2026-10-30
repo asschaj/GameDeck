@@ -10,6 +10,7 @@
 - 🐳 **Docker 隔离**：每个游戏运行在独立容器，环境隔离、易清理
 - 📋 **日志查看**：实时查看游戏容器运行日志
 - 🧹 **缓存清理**：一键清理停止的容器与无用镜像，返回释放空间
+- 🖥️ **双客户端**：Web 面板 + Qt 桌面客户端（统一管理界面）
 - 🔧 **可扩展**：新增游戏只需在 `GameRegistry` 注册配置 + 提供 Dockerfile
 
 ## 架构
@@ -46,6 +47,12 @@ gamedeck/
 │   ├── GameRegistry.h/.cpp # 游戏注册表
 │   ├── ThreadPool.h        # 线程池（执行阻塞 Docker 命令）
 │   └── Protocol.h          # 前后端协议
+├── qt_client/              # Qt 桌面客户端（统一管理界面）
+│   ├── CMakeLists.txt
+│   └── src/
+│       ├── main.cpp
+│       ├── MainWindow.h/.cpp  # 主窗口
+│       └── GameClient.h/.cpp  # WebSocket 客户端封装
 ├── tests/                  # 测试脚本
 │   ├── stability_test.py   # 稳定性测试（压测+内存监控）
 │   ├── stress_test.py      # 并发压测
@@ -99,6 +106,23 @@ docker build -t gamedeck/minetest:latest docker/minetest/
 ### 打开前端
 
 浏览器访问 `http://localhost:8080`（或通过前端静态服务器托管 `web/` 目录）。
+
+### 构建 Qt 桌面客户端
+
+```bash
+# 依赖
+sudo apt install qtbase5-dev libqt5websockets5-dev
+
+# 构建
+cd qt_client
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+make -C build -j4
+
+# 运行
+./build/gamedeck_client
+```
+
+Qt 客户端与 Web 面板功能等价，通过 QWebSocket 连接后端（默认 `127.0.0.1:8080`）。
 
 ## 前后端协议
 
