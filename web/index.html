@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameDeck - 游戏服务器托管面板</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GameDeck</h1>
+            <p class="subtitle">开源游戏服务器托管面板</p>
+            <div class="status-bar">
+                <span id="conn-status" class="conn-badge disconnected">未连接</span>
+                <button id="btn-clean" class="btn btn-secondary">清理缓存</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="section">
+                <h2>已安装游戏</h2>
+                <div id="game-list" class="game-list">
+                    <!-- 游戏卡片由 JS 动态渲染 -->
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>可添加游戏</h2>
+                <div id="available-list" class="game-list">
+                    <!-- 可安装游戏由 JS 动态渲染 -->
+                </div>
+            </section>
+
+            <div id="log-panel" class="log-panel">
+                <h2>操作日志</h2>
+                <div id="log-output"></div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

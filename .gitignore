@@ -1,0 +1,19 @@
+# 构建产物
+build/
+*.o
+*.a
+*.so
+
+# 游戏状态持久化文件（运行时生成）
+games.state
+
+# 日志
+*.log
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# 系统文件
+.DS_Store
