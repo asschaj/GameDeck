@@ -20,7 +20,8 @@ class Server : public std::enable_shared_from_this<Server>
 {
  public:
     Server(net::io_context& ioc, unsigned short port,
-           GameRegistry* registry, GameManager* manager);
+           GameRegistry* registry, GameManager* manager,
+           const std::string& webRoot);
 
     // 启动监听
     void run();
@@ -33,6 +34,7 @@ class Server : public std::enable_shared_from_this<Server>
     tcp::acceptor acceptor_;
     GameRegistry* registry_;
     GameManager* manager_;
+    std::string webRoot_;
 };
 
 }  // namespace gamedeck

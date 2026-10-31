@@ -26,6 +26,7 @@ struct GameConfig
     bool hasVolume = false;   // 是否需要挂载数据卷
     std::string volumePath;   // 数据卷路径
     std::string dockerfile;   // Dockerfile 路径（相对项目根，如 "docker/mindustry"）
+    std::string downloadUrl;  // 游戏客户端官方下载链接（前端展示，玩家点按钮跳转）
     bool installed = false;   // 镜像是否已构建（可启动）
 };
 

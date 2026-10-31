@@ -8,11 +8,13 @@ namespace gamedeck
 {
 
 Server::Server(net::io_context& ioc, unsigned short port,
-               GameRegistry* registry, GameManager* manager)
+               GameRegistry* registry, GameManager* manager,
+               const std::string& webRoot)
     : ioc_(ioc),
       acceptor_(ioc, tcp::endpoint(tcp::v4(), port)),
       registry_(registry),
-      manager_(manager)
+      manager_(manager),
+      webRoot_(webRoot)
 {
 }
 
@@ -39,7 +41,7 @@ void Server::onAccept(boost::system::error_code ec, tcp::socket socket)
     }
 
     // 创建会话并运行
-    std::make_shared<Session>(std::move(socket), registry_, manager_)->run();
+    std::make_shared<Session>(std::move(socket), registry_, manager_, webRoot_)->run();
 
     // 继续接受下一个连接
     doAccept();

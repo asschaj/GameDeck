@@ -20,6 +20,7 @@ GameRegistry::GameRegistry(const std::string& stateFilePath)
         c.hasVolume = true;
         c.volumePath = "mindustry-data:/srv/mindustry/config";
         c.dockerfile = "docker/mindustry";
+        c.downloadUrl = "https://mindustrygame.github.io/";
         c.installed = true;
         games_[c.name] = c;
     }
@@ -34,6 +35,7 @@ GameRegistry::GameRegistry(const std::string& stateFilePath)
         c.hasVolume = true;
         c.volumePath = "minetest-data:/root/.minetest";
         c.dockerfile = "docker/minetest";
+        c.downloadUrl = "https://www.minetest.net/downloads/";
         c.installed = true;
         games_[c.name] = c;
     }
@@ -49,6 +51,7 @@ GameRegistry::GameRegistry(const std::string& stateFilePath)
         c.hasVolume = true;
         c.volumePath = "minecraft-data:/srv/minecraft";
         c.dockerfile = "docker/minecraft";
+        c.downloadUrl = "https://www.minecraft.net/zh-hans/download";
         c.installed = false;
         games_[c.name] = c;
     }
@@ -63,6 +66,7 @@ GameRegistry::GameRegistry(const std::string& stateFilePath)
         c.hasVolume = true;
         c.volumePath = "terraria-data:/srv/terraria";
         c.dockerfile = "docker/terraria";
+        c.downloadUrl = "https://terraria.org/";
         c.installed = false;
         games_[c.name] = c;
     }

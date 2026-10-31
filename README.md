@@ -33,7 +33,9 @@
 ```
 gamedeck/
 ├── CMakeLists.txt
+├── run.sh                  # 一键编译 + 启动脚本
 ├── DESIGN.md               # 详细设计文档
+├── Java开发说明书.md        # 开发说明书（协议 / 任务 / 改哪里，含 Java 示例）
 ├── docker/                 # 游戏镜像
 │   ├── mindustry/Dockerfile
 │   ├── minetest/Dockerfile
@@ -87,6 +89,12 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 make -C build -j4
 ```
 
+或直接一键编译并启动（推荐）：
+
+```bash
+./run.sh 8889          # 自动配置 → 编译 → 清理旧进程 → 启动
+```
+
 ### 构建游戏镜像
 
 ```bash
@@ -100,12 +108,15 @@ docker build -t gamedeck/minetest:latest docker/minetest/
 ### 启动服务
 
 ```bash
-./build/gamedeck_server 8080
+./build/gamedeck_server 8889
 ```
 
 ### 打开前端
 
-浏览器访问 `http://localhost:8080`（或通过前端静态服务器托管 `web/` 目录）。
+浏览器访问 `http://localhost:8889`。
+
+> 后端在**同一端口**同时提供 HTTP 静态页面和 WebSocket 服务：
+> 普通 HTTP GET 返回 `web/` 目录下的文件，`Upgrade: websocket` 请求转交 WebSocket 处理。
 
 ### 构建 Qt 桌面客户端
 
@@ -139,8 +150,8 @@ WebSocket 文本消息（JSON）：
 { "type": "clean_cache" }
 
 // 服务端 → 客户端
-{ "type": "game_list", "games": [{"name":"mindustry","display":"Mindustry","status":"running"}] }
-{ "type": "available_list", "games": [{"name":"minecraft","display":"Minecraft","description":"..."}] }
+{ "type": "game_list", "games": [{"name":"mindustry","display":"Mindustry","download_url":"https://mindustrygame.github.io/","status":"running"}] }
+{ "type": "available_list", "games": [{"name":"minecraft","display":"Minecraft","description":"...","download_url":"https://www.minecraft.net/zh-hans/download"}] }
 { "type": "install_result", "game": "minecraft", "success": true, "message": "..." }
 { "type": "game_status", "game": "mindustry", "status": "running" }
 { "type": "game_logs", "game": "mindustry", "logs": "..." }

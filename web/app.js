@@ -9,12 +9,16 @@ const availableListEl = document.getElementById('available-list');
 const logOutput = document.getElementById('log-output');
 const btnClean = document.getElementById('btn-clean');
 
-// 连接 WebSocket（默认同源 8080 端口）
+// 连接 WebSocket（同源端口：跟随页面访问的端口）
 function connect() {
     const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-    const host = location.hostname || '127.0.0.1';
-    const port = '8080';
-    ws = new WebSocket(`${protocol}://${host}:${port}`);
+    // 后端 WebSocket 与前端页面同源同端口，直接复用 location.host
+    // 若通过本地文件(file://)打开，则回退到 8080
+    let host = location.host;
+    if (!host) {
+        host = '127.0.0.1:8080';
+    }
+    ws = new WebSocket(`${protocol}://${host}`);
 
     ws.onopen = () => {
         connStatus.textContent = '已连接';
@@ -125,6 +129,16 @@ function renderGameList(games) {
             actions.appendChild(startBtn);
         }
 
+        if (game.download_url) {
+            const dlBtn = document.createElement('a');
+            dlBtn.className = 'btn btn-download';
+            dlBtn.textContent = '下载客户端';
+            dlBtn.href = game.download_url;
+            dlBtn.target = '_blank';
+            dlBtn.rel = 'noopener noreferrer';
+            actions.appendChild(dlBtn);
+        }
+
         card.appendChild(actions);
         gameListEl.appendChild(card);
     });
@@ -165,6 +179,16 @@ function renderAvailableList(games) {
             send({ type: 'install_game', game: game.name });
         };
         actions.appendChild(installBtn);
+
+        if (game.download_url) {
+            const dlBtn = document.createElement('a');
+            dlBtn.className = 'btn btn-download';
+            dlBtn.textContent = '下载客户端';
+            dlBtn.href = game.download_url;
+            dlBtn.target = '_blank';
+            dlBtn.rel = 'noopener noreferrer';
+            actions.appendChild(dlBtn);
+        }
 
         card.appendChild(actions);
         availableListEl.appendChild(card);

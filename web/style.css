@@ -82,8 +82,42 @@ header h1 {
     color: #e2e8f0;
 }
 
+.btn-download {
+    background: #0d9488;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    line-height: normal;
+}
+
+.btn-download:hover {
+    opacity: 0.85;
+}
+
 .section {
     margin-bottom: 24px;
+}
+
+.guide {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-left: 3px solid #0d9488;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+}
+
+.guide h2 {
+    font-size: 16px;
+    color: #2dd4bf;
+    margin-bottom: 8px;
+}
+
+.guide p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 .section h2 {

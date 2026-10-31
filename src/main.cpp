@@ -16,11 +16,18 @@ namespace net = boost::asio;
 
 int main(int argc, char* argv[])
 {
-    // 默认端口 8080，可通过命令行参数指定
+    // 默认端口 8080，可通过命令行参数指定：./gamedeck_server <port> [webRoot]
     unsigned short port = 8080;
     if (argc > 1)
     {
         port = static_cast<unsigned short>(std::atoi(argv[1]));
+    }
+
+    // 静态文件根目录，默认项目根下的 web 目录
+    std::string webRoot = "web";
+    if (argc > 2)
+    {
+        webRoot = argv[2];
     }
 
     try
@@ -35,10 +42,11 @@ int main(int argc, char* argv[])
         gamedeck::GameManager manager(&pool);
 
         // 创建并启动服务器
-        auto server = std::make_shared<gamedeck::Server>(ioc, port, &registry, &manager);
+        auto server = std::make_shared<gamedeck::Server>(ioc, port, &registry, &manager, webRoot);
         server->run();
 
         std::cout << "GameDeck 服务运行中，Docker 命令线程池: 4 线程" << std::endl;
+        std::cout << "Web 面板地址: http://localhost:" << port << std::endl;
 
         // 进入事件循环
         ioc.run();
